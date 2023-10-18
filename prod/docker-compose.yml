@@ -1,5 +1,5 @@
 version: '3.8'
-
+# build web-frontend container
 services:
   web-frontend-dev:
     container_name: web-frontend-${ENV}
@@ -19,7 +19,7 @@ services:
     ports:
       - "80:80"
 
-
+# build mysql container
   mysql-db:
     container_name: mysql-db-${ENV}
     image: mysql:5.7
@@ -30,7 +30,7 @@ services:
     env_file:
       - .env
 
-
+# build mongodb container
   mongodb:
     container_name: mongodb-${ENV}
     image: mongo:4.2
