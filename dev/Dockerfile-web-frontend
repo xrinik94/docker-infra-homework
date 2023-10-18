@@ -1,0 +1,14 @@
+FROM --platform=linux/amd64 php:7.0-apache
+EXPOSE 80
+
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's|security.debian.org|archive.debian.org/|g' \
+           -e '/stretch-updates/d' /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get clean \
+    && pecl install xdebug-2.9.0 mongodb mysql \
+    && docker-php-ext-install mysqli && docker-php-ext-enable mysqli && docker-php-ext-enable xdebug 
+
+COPY ./index.php /var/www/html/
+
+CMD ["apachectl", "-D", "FOREGROUND"]
